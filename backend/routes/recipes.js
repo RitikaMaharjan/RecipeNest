@@ -79,7 +79,7 @@ router.get('/:id', async (req, res) => {
 // @access  Private
 router.post('/', auth, async (req, res) => {
   try {
-    const { title, description, category, tags, ingredients, instructions, image } = req.body;
+  const { title, description, category, tags, ingredients, instructions, image, cookingTime, difficulty, servings } = req.body;
 
     const recipe = new Recipe({
       chef: req.user.user.id,
@@ -89,7 +89,10 @@ router.post('/', auth, async (req, res) => {
       tags,
       ingredients,
       instructions,
-      image
+      image,
+      cookingTime,
+      difficulty,
+      servings
     });
 
     await recipe.save();
@@ -116,8 +119,7 @@ router.put('/:id', auth, async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    const { title, description, category, tags, ingredients, instructions, image } = req.body;
-
+   const { title, description, category, tags, ingredients, instructions, image, cookingTime, difficulty, servings } = req.body;
     recipe = await Recipe.findByIdAndUpdate(
       req.params.id,
       {
@@ -129,10 +131,13 @@ router.put('/:id', auth, async (req, res) => {
           ingredients,
           instructions,
           image,
+          cookingTime,
+          difficulty,
+          servings,
           updatedAt: Date.now()
         }
       },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     res.json(recipe);
@@ -183,6 +188,11 @@ router.post('/:id/rate', auth, async (req, res) => {
     const alreadyRated = recipe.ratings.find(
       r => r.user.toString() === req.user.user.id
     );
+
+    // Prevent chef from rating their own recipe
+    if (recipe.chef.toString() === req.user.user.id) {
+      return res.status(400).json({ message: 'You cannot rate your own recipe' });
+    }
 
     if (alreadyRated) {
       // Update existing rating

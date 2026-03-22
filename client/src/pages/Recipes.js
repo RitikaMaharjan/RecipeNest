@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import axios from 'axios';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiClock } from 'react-icons/fi';
 
 const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack', 'Drink'];
 
@@ -103,8 +108,126 @@ const Recipes = () => {
     </button>
   ))}
 </div>
+{/* Trending Section */}
+{recipes.length > 0 && (
+  <div className="mb-12 -mx-4">
+    <Swiper
+      modules={[Autoplay, Pagination, Navigation]}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 4000, disableOnInteraction: false }}
+      className="rounded-3xl overflow-hidden pb-10"
+    >
+      {recipes.slice(0, 5).map((recipe) => (
+        <SwiperSlide key={recipe._id}>
+          <Link to={`/recipes/${recipe._id}`} className="block relative h-[400px]">
+            {/* Background Image */}
+            {recipe.image ? (
+              <img src={recipe.image} alt={recipe.title}
+                   className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-orange-100" />
+            )}
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
 
+            {/* Content - Left aligned */}
+            <div className="absolute inset-0 flex items-center px-16">
+              <div className="max-w-lg">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="bg-primary text-white text-xs px-3 py-1 rounded-full">
+                    {recipe.category}
+                  </span>
+                  <span className="text-orange-300 text-sm font-medium">🔥 Trending</span>
+                </div>
+                <h3 className="font-display text-5xl text-white leading-tight mb-3">
+                  {recipe.title}
+                </h3>
+                <p className="text-gray-300 text-sm mb-6">
+                  By <span className="text-white font-medium">{recipe.chef?.name}</span>
+                  {recipe.averageRating > 0 && (
+                    <span className="ml-3">⭐ {recipe.averageRating.toFixed(1)}</span>
+                  )}
+                </p>
+                <span className="bg-primary text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition inline-block">
+                  View Recipe →
+                </span>
+              </div>
+            </div>
+          </Link>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+)}
+
+{/* Chef's Pick Section */}
+{recipes.length > 0 && (
+  <div className="mb-12">
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="font-display text-2xl text-dark">
+   <span className="text-primary">Chef's</span> Pick
+  </h2>
+      <span className="text-gray-400 text-sm">Swipe to explore</span>
+    </div>
+
+    <Swiper
+      modules={[Autoplay, Pagination, Navigation]}
+      spaceBetween={20}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      breakpoints={{
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+      className="pb-10"
+    >
+      {recipes.slice(0, 10).map((recipe) => (
+        <SwiperSlide key={recipe._id}>
+          <Link
+            to={`/recipes/${recipe._id}`}
+            className="relative rounded-3xl overflow-hidden h-72 block group"
+          >
+            {recipe.image ? (
+              <img src={recipe.image} alt={recipe.title}
+                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            ) : (
+              <div className="w-full h-full bg-orange-100 flex items-center justify-center text-6xl">🍽️</div>
+            )}
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+            {/* Content */}
+            <div className="absolute bottom-0 left-0 right-0 p-5">
+              <span className="bg-primary text-white text-xs px-3 py-1 rounded-full font-medium">
+                {recipe.category}
+              </span>
+              <h3 className="font-display text-xl text-white mt-2 line-clamp-1">{recipe.title}</h3>
+              <div className="flex items-center justify-between mt-2">
+                <p className="text-gray-300 text-sm">By {recipe.chef?.name}</p>
+                <div className="flex items-center gap-1">
+                  <span className="text-yellow-400 text-sm">★</span>
+                  <span className="text-white text-sm">
+                    {recipe.averageRating > 0 ? recipe.averageRating.toFixed(1) : 'New'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+)}
         {/* Recipes Grid */}
+        <div className="flex items-center justify-between mb-6">
+  <h2 className="font-display text-2xl text-dark">
+    Discover <span className="text-primary">All Recipes</span>
+  </h2>
+</div>
         {filteredRecipes.length === 0 ? (
           <div className="text-center text-gray-400 py-20">
             <div className="text-6xl mb-4">🍽️</div>
@@ -131,21 +254,35 @@ const Recipes = () => {
                     </span>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-display text-lg text-dark">{recipe.title}</h3>
-                  <p className="text-gray-400 text-sm mt-1 line-clamp-2">{recipe.description}</p>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-1">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-sm text-gray-400">
-                        {recipe.averageRating > 0 ? recipe.averageRating.toFixed(1) : 'No ratings'}
-                      </span>
-                    </div>
-                    <span className="text-gray-400 text-xs">
-                      By {recipe.chef?.name}
-                    </span>
-                  </div>
-                </div>
+<div className="p-4">
+  <h3 className="font-display text-lg text-dark">{recipe.title}</h3>
+  <div className="flex items-center justify-between mt-3">
+    {recipe.difficulty && (
+      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+        recipe.difficulty === 'Easy' ? 'bg-green-100 text-green-600' :
+        recipe.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-600' :
+        'bg-red-100 text-red-600'
+      }`}>
+        {recipe.difficulty}
+      </span>
+    )}
+    {recipe.cookingTime > 0 && (
+      <span className="text-gray-400 text-xs flex items-center gap-1">
+        <FiClock size={11} /> {recipe.cookingTime} mins
+      </span>
+    )}
+  </div>
+  <div className="flex items-center justify-between mt-2">
+    <div className="flex items-center gap-1">
+      <span className="text-yellow-400">★</span>
+      <span className="text-sm text-gray-400">
+        {recipe.averageRating > 0 ? recipe.averageRating.toFixed(1) : 'No ratings'}
+      </span>
+    </div>
+    <span className="text-gray-400 text-xs">By {recipe.chef?.name}</span>
+  </div>
+</div>
+                
               </Link>
             ))}
           </div>

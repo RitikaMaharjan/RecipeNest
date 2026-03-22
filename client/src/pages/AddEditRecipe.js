@@ -13,14 +13,17 @@ const AddEditRecipe = () => {
   const navigate = useNavigate();
   const isEditing = !!id;
 
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: '',
     description: '',
     category: 'Breakfast',
     tags: '',
     ingredients: [''],
     instructions: [''],
-    image: ''
+    image: '',
+    cookingTime: '',
+    difficulty: 'Easy',
+    servings: 2
   });
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,14 +38,17 @@ const AddEditRecipe = () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/recipes/${id}`);
       const recipe = res.data;
-      setFormData({
+        setFormData({
         title: recipe.title,
         description: recipe.description,
         category: recipe.category,
         tags: recipe.tags?.join(', ') || '',
         ingredients: recipe.ingredients?.length > 0 ? recipe.ingredients : [''],
         instructions: recipe.instructions?.length > 0 ? recipe.instructions : [''],
-        image: recipe.image || ''
+        image: recipe.image || '',
+        cookingTime: recipe.cookingTime || '',
+        difficulty: recipe.difficulty || 'Easy',
+        servings: recipe.servings || 2
       });
     } catch (error) {
       toast.error('Failed to load recipe');
@@ -149,6 +155,7 @@ const AddEditRecipe = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
           {/* Basic Info */}
+
           <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-4">
             <h2 className="font-bold text-dark text-lg">Basic Information</h2>
 
@@ -164,6 +171,48 @@ const AddEditRecipe = () => {
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition"
               />
             </div>
+            
+        <div className="grid grid-cols-3 gap-4">
+  <div>
+    <label className="text-sm font-medium text-gray-600 mb-1 block">
+      Cooking Time <span className="text-gray-400">(mins)</span>
+    </label>
+    <input
+      type="number"
+      name="cookingTime"
+      value={formData.cookingTime}
+      onChange={handleChange}
+      placeholder="e.g. 30"
+      min="0"
+      className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition"
+    />
+  </div>
+  <div>
+    <label className="text-sm font-medium text-gray-600 mb-1 block">Difficulty</label>
+    <select
+      name="difficulty"
+      value={formData.difficulty}
+      onChange={handleChange}
+      className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition"
+    >
+      <option value="Easy">Easy</option>
+      <option value="Medium">Medium</option>
+      <option value="Hard">Hard</option>
+    </select>
+  </div>
+  <div>
+    <label className="text-sm font-medium text-gray-600 mb-1 block">Servings</label>
+    <input
+      type="number"
+      name="servings"
+      value={formData.servings}
+      onChange={handleChange}
+      placeholder="e.g. 4"
+      min="1"
+      className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition"
+    />
+  </div>
+</div>            
 
             <div>
               <label className="text-sm font-medium text-gray-600 mb-1 block">Description</label>

@@ -17,7 +17,7 @@ const RecipeSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack', 'Drink', 'Vegan', 'Vegetarian', 'Seafood', 'Grilling & BBQ', 'Pasta', 'Soup', 'Salad', 'Baking', 'Asian', 'Italian', 'Mexican', 'Indian', 'Middle Eastern', 'American', 'French', 'Healthy', 'Kids Friendly'],
+    enum: ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack', 'Drink', ],
     required: true
   },
   tags: [
@@ -40,6 +40,19 @@ const RecipeSchema = new mongoose.Schema({
   image: {
     type: String,
     default: ''
+  },
+  cookingTime: {
+    type: Number,
+    default: 0
+  },
+  difficulty: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+    default: 'Easy'
+  },
+  servings: {
+    type: Number,
+    default: 2
   },
   ratings: [
     {
