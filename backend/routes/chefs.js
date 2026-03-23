@@ -41,14 +41,15 @@ router.get('/:id', async (req, res) => {
 // @access  Private
 router.put('/:id', auth, async (req, res) => {
   try {
-    const { bio, specialty, location, social, photo } = req.body;
+    const { bio, specialty, location, social, photo, coverImage } = req.body;
 
     const profileFields = {};
-    if (bio) profileFields.bio = bio;
-    if (specialty) profileFields.specialty = specialty;
-    if (location) profileFields.location = location;
-    if (req.body.coverImage !== undefined) profileFields.coverImage = req.body.coverImage;
-    if (social) profileFields.social = social;
+    if (bio !== undefined) profileFields.bio = bio;
+    if (specialty !== undefined) profileFields.specialty = specialty;
+    if (location !== undefined) profileFields.location = location;
+    if (photo !== undefined) profileFields.photo = photo;
+    if (coverImage !== undefined) profileFields.coverImage = coverImage;
+    if (social !== undefined) profileFields.social = social;
 
     let profile = await Profile.findOne({ user: req.params.id });
 

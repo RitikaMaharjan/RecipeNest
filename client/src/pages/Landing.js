@@ -39,7 +39,8 @@ const Landing = () => {
         {/* Left Content */}
         <div className="flex-1">
           <span className="bg-orange-100 text-primary px-4 py-1 rounded-full text-sm font-medium">
-            🍳 The Chef's Platform
+        ✨ The Chef's Platform
+      
           </span>
           <h1 className="font-display text-5xl md:text-6xl text-dark leading-tight mt-4">
           Cook. <br />
@@ -81,28 +82,27 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Right Content - Real Food Images */}
-                
-        {/* Right Content - Real Food Images */}
+        
 {/* Right Content - Real Food Images */}
-<div className="flex-1 grid grid-cols-2 gap-4">
-  <div className="rounded-2xl h-48 overflow-hidden shadow-sm">
-    <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=60" 
+<div className="flex-1 grid grid-cols-2 gap-3">
+  <div className="rounded-2xl overflow-hidden shadow-sm h-52">
+    <img src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=600&auto=format&fit=crop&q=60" 
          alt="food" className="w-full h-full object-cover hover:scale-105 transition duration-300" />
   </div>
-  <div className="rounded-2xl h-48 overflow-hidden shadow-sm">
-    <img src="https://images.unsplash.com/photo-1505394033641-40c6ad1178d7?w=600&auto=format&fit=crop&q=60" 
+  <div className="rounded-2xl overflow-hidden shadow-sm h-52 mt-6">
+    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=60" 
          alt="food" className="w-full h-full object-cover hover:scale-105 transition duration-300" />
   </div>
-  <div className="rounded-2xl h-48 overflow-hidden shadow-sm">
-    <img src="https://plus.unsplash.com/premium_photo-1663840345068-6a1032b26742?w=600&auto=format&fit=crop&q=60" 
+  <div className="rounded-2xl overflow-hidden shadow-sm h-52">
+    <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&auto=format&fit=crop&q=60" 
          alt="food" className="w-full h-full object-cover hover:scale-105 transition duration-300" />
   </div>
-  <div className="rounded-2xl h-48 overflow-hidden shadow-sm mt-6">
-    <img src="https://images.unsplash.com/photo-1604321115296-f4b73745c7d9?w=600&auto=format&fit=crop&q=60" 
+  <div className="rounded-2xl overflow-hidden shadow-sm h-52 mt-6">
+    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&auto=format&fit=crop&q=60" 
          alt="food" className="w-full h-full object-cover hover:scale-105 transition duration-300" />
   </div>
 </div>
+
       </div>
 
       {/* How It Works */}
@@ -206,8 +206,8 @@ const Landing = () => {
   <div className="max-w-7xl mx-auto px-4">
     <div className="flex items-center justify-between mb-8">
       <div>
-        <h2 className="font-display text-4xl text-dark">Latest Recipes</h2>
-        <p className="text-gray-400 mt-1">Freshly added culinary creations</p>
+        <h2 className="font-display text-4xl text-dark">Top Rated</h2>
+        <p className="text-gray-400 mt-1">Most loved recipes by our community</p>
       </div>
       <Link to="/chefs" className="text-primary font-medium hover:underline flex items-center gap-1">
         View All <FiArrowRight size={16} />
@@ -234,6 +234,8 @@ const Landing = () => {
               <p className="text-gray-400 text-sm mt-1">Register to see full recipes</p>
               <div className="flex items-center gap-1 mt-3">
                 <span className="text-yellow-400 text-sm">★★★★★</span>
+                
+                
               </div>
             </div>
           </div>
@@ -263,7 +265,7 @@ const Landing = () => {
             </div>
             <div className="p-4">
               <h3 className="font-display text-lg text-dark mt-1">{recipe.title}</h3>
-              <p className="text-gray-400 text-sm mt-1 line-clamp-2">{recipe.description}</p>
+              
               <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center gap-1">
                   <span className="text-yellow-400">★</span>

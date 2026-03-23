@@ -48,11 +48,14 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/chefs" className="text-gray-600 hover:text-primary transition font-medium text-sm">
+          <Link to="/chefs" className="text-gray-500 hover:text-primary transition text-sm font-medium">
             Chefs
           </Link>
-          <Link to="/recipes" className="text-gray-600 hover:text-primary transition font-medium text-sm">
+          <Link to="/recipes" className="text-gray-500 hover:text-primary transition text-sm font-medium">
             Recipes
+          </Link>
+          <Link to="/about" className="text-gray-500 hover:text-primary transition text-sm font-medium">
+            About
           </Link>
           {user ? (
             <>

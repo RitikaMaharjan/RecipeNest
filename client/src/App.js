@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import About from './pages/About';
 
 // Pages
 import Landing from './pages/Landing';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/chefs/:id" element={<ChefProfile />} />
           <Route path="/chefs/:id/recipes" element={<RecipePortfolio />} />
           <Route path="/recipes" element={<Recipes />} />
+          <Route path="/about" element={<About />} />
           <Route path="/recipes/:id" element={<RecipeDetail />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
